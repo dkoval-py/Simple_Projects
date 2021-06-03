@@ -1,9 +1,10 @@
 #!/bin/bash
 
+wget https://raw.githubusercontent.com/dkoval-py/Simple_Projects/master/topics.json
 KAFKAZKHOSTS=$1
-TOPICS_NAMES=(`jq -c '.[]' $2 | jq -r '[.name]|join(" ")'`)
-PARTITIONS=(`jq -c '.[]' $2 | jq -r '[.partitions]|join(" ")'`)
-REPLICATIONS=(`jq -c '.[]' $2 | jq -r '[.replication]|join(" ")'`)
+TOPICS_NAMES=(`jq -c '.[]' topics.json | jq -r '[.name]|join(" ")'`)
+PARTITIONS=(`jq -c '.[]' topics.json | jq -r '[.partitions]|join(" ")'`)
+REPLICATIONS=(`jq -c '.[]' topics.json | jq -r '[.replication]|join(" ")'`)
 echo "Start"
 echo $KAFKAZKHOSTS
 echo $2
