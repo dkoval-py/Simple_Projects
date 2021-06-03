@@ -9,9 +9,9 @@ REPLICATIONS=(`jq -c '.[]' /topics.json | jq -r '[.replication]|join(" ")'`)
 for i in $(seq 1 ${#TOPICS_NAMES[@]}); do
     let "i=i-1"
     if /usr/hdp/current/kafka-broker/bin/kafka-topics.sh --create --replication-factor ${REPLICATIONS[$i]} --partitions ${PARTITIONS[$i]} --topic ${TOPICS_NAMES[$i]} --zookeeper $KAFKAZKHOSTS; then
-        echo "Topic ${TOPICS_NAMES[$i]} created sucessfully"
+        echo "##[section]Topic ${TOPICS_NAMES[$i]} created sucessfully"
     else
-        echo "Topic ${TOPICS_NAMES[$i]} already exist"
+        echo "##vso[task.logissue type=warning]Topic ${TOPICS_NAMES[$i]} already exists"
     fi
 done
 
