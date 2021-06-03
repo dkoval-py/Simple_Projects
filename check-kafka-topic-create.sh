@@ -6,6 +6,7 @@ PARTITIONS=(`jq -c '.[]' topics.json | jq -r '[.partitions]|join(" ")'`)
 REPLICATIONS=(`jq -c '.[]' topics.json | jq -r '[.replication]|join(" ")'`)
 echo "Start"
 echo $KAFKAZKHOSTS
+echo $2
 echo "Stop"
 
 
