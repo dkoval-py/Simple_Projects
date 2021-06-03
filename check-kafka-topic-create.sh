@@ -1,16 +1,17 @@
 #!/bin/bash
 
 KAFKAZKHOSTS=$1
-TOPICS_LIST=(test1 test2)
-PARTITIONS_COUNT=$2
-REPLICATION_FACTOR=$3
+TOPICS_NAMES=(`jq -c '.[]' topics.json | jq -r '[.name]|join(" ")'`)
+PARTITIONS=(`jq -c '.[]' topics.json | jq -r '[.partitions]|join(" ")'`)
+REPLICATIONS=(`jq -c '.[]' topics.json | jq -r '[.replication]|join(" ")'`)
 echo "Start"
 echo $KAFKAZKHOSTS
 echo "Stop"
 
-for i in ${TOPICS_LIST[@]}; do
-    echo $i
-    if /usr/hdp/current/kafka-broker/bin/kafka-topics.sh --create --replication-factor $REPLICATION_FACTOR --partitions $PARTITIONS_COUNT --topic $i --zookeeper $KAFKAZKHOSTS; then
+
+for i in $(seq 1 ${#TOPICS_NAMES[@]}); do
+    let "i=i-1"
+    if /usr/hdp/current/kafka-broker/bin/kafka-topics.sh --create --replication-factor ${REPLICATIONS[$i]} --partitions ${PARTITIONS[$i]} --topic ${TOPICS_NAMES[$i]} --zookeeper $KAFKAZKHOSTS; then
         echo "Topic created sucessfully"
     else
         echo "Topic already exist"
