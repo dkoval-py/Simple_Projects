@@ -1,6 +1,10 @@
 #!/bin/bash
 
 wget -O "topics.json" "https://raw.githubusercontent.com/dkoval-py/Simple_Projects/master/topics.json"
+ls -la
+hostname
+ip a
+pwd
 KAFKAZKHOSTS=$1
 TOPICS_NAMES=(`jq -c '.[]' topics.json | jq -r '[.name]|join(" ")'`)
 PARTITIONS=(`jq -c '.[]' topics.json | jq -r '[.partitions]|join(" ")'`)
