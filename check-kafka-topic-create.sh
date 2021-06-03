@@ -2,16 +2,19 @@
 
 KAFKAZKHOSTS=$1
 TOPICS_LIST=(test1 test2)
+PARTITIONS_COUNT=$2
+REPLICATION_FACTOR=$3
 echo "Start"
 echo $KAFKAZKHOSTS
 echo "Stop"
 
 for i in ${TOPICS_LIST[@]}; do
-  if /usr/hdp/current/kafka-broker/bin/kafka-topics.sh --create --replication-factor 1 --partitions 1 --topic $i --zookeeper $KAFKAZKHOSTS; then
+    echo $i
+    if /usr/hdp/current/kafka-broker/bin/kafka-topics.sh --create --replication-factor $REPLICATION_FACTOR --partitions $PARTITIONS_COUNT --topic $i --zookeeper $KAFKAZKHOSTS; then
         echo "Topic created sucessfully"
-  else
+    else
         echo "Topic already exist"
-  fi
+    fi
 done
 
 exit 0
